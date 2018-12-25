@@ -55,7 +55,7 @@ declare module "sql" {
 	}
 
 	interface QueryExecutor<T> {
-		query(q: Query): PromiseLike<{ rows?: T[] }>
+		query(q: Query<T>): PromiseLike<{ rows: T[] }>
 	}
 
 	interface Executable {
