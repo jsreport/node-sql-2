@@ -54,6 +54,10 @@ declare module "sql" {
 		text:string
 	}
 
+	interface QueryExecutor<T> {
+		query(q: Query): PromiseLike<{ rows?: T[] }>
+	}
+
 	interface Executable {
 		toQuery():QueryLike;
 	}
@@ -85,6 +89,11 @@ declare module "sql" {
 		order(...criteria:OrderByValueNode[]):Query<T>
 		limit(l:number):Query<T>
 		offset(o:number):Query<T>
+
+		// I/O
+		execWithin(qe: QueryExecutor<T>): Promise<T[]>;
+		allWithin(qe: QueryExecutor<T>): Promise<T[]>;
+		getWithin(qe: QueryExecutor<T>): Promise<T | null>;
 	}
 
 	interface SubQuery<T> {
